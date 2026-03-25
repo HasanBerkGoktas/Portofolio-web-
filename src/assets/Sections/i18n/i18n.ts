@@ -98,7 +98,7 @@ const resources = {
 
       about: {
         title: "Hakkımda",
-        text1: "Merhaba! Ben Hasan Berk. Kullanıcı dostu, hızlı ve modern web arayüzleri geliştirmeye odaklanmış bir frontend developer adayiyim.",
+        text1: "Merhaba! Ben Hasan Berk. Kullanıcı dostu, hızlı ve modern web arayüzleri geliştirmeye odaklanmış bir frontend developer adayıyım.",
         text2: "React ve TypeScript ekosisteminde kendimi geliştiriyor, temiz kod yazmayı ve performanslı çözümler üretmeyi önemsiyorum."
       },
 
