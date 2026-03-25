@@ -1,133 +1,224 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaGithub, FaTimes, FaInfoCircle } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 const Projects: React.FC = () => {
   const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const myProjects = [
     {
       title: t('projects.dashboardTitle', 'Admin Dashboard Panel'),
       tech: t('projects.dashboardTech', 'React, Material UI'),
-      desc: t('projects.dashboardDesc', 'Modern ve minimalist bir yönetim paneli örneğidir. Veri görselleştirme ve kullanıcı yönetimi içerir.'),
-      details: t('projects.dashboardDetails', 'Bu projede Material UI bileşen kütüphanesini kullanarak responsive bir dashboard oluşturdum. Recharts ile veri grafikleri ekledim.'),
+      desc: t('projects.dashboardDesc'),
+      details: t('projects.dashboardDetails'),
       githubLink: "https://github.com/HasanBerkGoktas/dashboard-admin-"
     },
     {
-      title: t('projects.dbTitle', 'Veri Tabanı Kayıt Ekleme'),
-      tech: t('projects.dbTech', 'C# Entity Framework'),
-      desc: t('projects.dbDesc', 'Desktop tabanlı veri yönetim uygulaması.'),
-      details: t('projects.dbDetails', 'C# ve Entity Framework kullanarak MSSQL veri tabanına CRUD (Ekle, Oku, Güncelle, Sil) işlemlerini gerçekleştiren bir masaüstü uygulamasıdır.'),
+      title: t('projects.dbTitle'),
+      tech: t('projects.dbTech'),
+      desc: t('projects.dbDesc'),
+      details: t('projects.dbDetails'),
       githubLink: "https://github.com/HasanBerkGoktas/Veri-Tabani-Kayit-Ekleme"
     },
     {
-      title: t('projects.nfsTitle', 'NFS Most Wanted Fan Site'),
-      tech: t('projects.nfsTech', 'HTML, CSS'),
-      desc: t('projects.nfsDesc', 'Efsane yarış oyununun fan sitesi.'),
-      details: t('projects.nfsDetails', 'Saf CSS kullanarak oyunun atmosferini yansıtan bir tasarım yaptım. Flexbox ve Grid sistemlerini yoğun şekilde kullandım.'),
+      title: t('projects.nfsTitle'),
+      tech: t('projects.nfsTech'),
+      desc: t('projects.nfsDesc'),
+      details: t('projects.nfsDetails'),
       githubLink: "https://github.com/HasanBerkGoktas/NFS-Most-Wanted-Fan-Site"
     },
     {
-      title: t('projects.loginTitle', 'Giriş Yapılandırması'),
-      tech: t('projects.loginTech', 'HTML, CSS'),
-      desc: t('projects.loginDesc', 'Güvenli görünümlü giriş arayüzü.'),
-      details: t('projects.loginDetails', 'Modern login formları ve validasyon tasarımları üzerine bir çalışma. Kullanıcı deneyimi (UX) odaklı bir form yapısıdır.'),
+      title: t('projects.loginTitle'),
+      tech: t('projects.loginTech'),
+      desc: t('projects.loginDesc'),
+      details: t('projects.loginDetails'),
       githubLink: "https://github.com/HasanBerkGoktas/login"
     }
   ];
 
   return (
-    <section id="projects" style={sectionStyle}>
-      <h2 style={headingStyle}>{t('projects.title', 'Projelerim')}</h2>
-      
-      <div style={gridStyle}>
+    <section style={{
+      padding: isMobile ? '50px 20px' : '60px 10%',
+      backgroundColor: '#000',
+      color: '#fff'
+    }}>
+      <h2 style={{
+        fontSize: isMobile ? '1.8rem' : '2.5rem',
+        textAlign: 'center',
+        marginBottom: '40px'
+      }}>
+        {t('projects.title')}
+      </h2>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: isMobile ? '15px' : '20px'
+      }}>
         {myProjects.map((p, index) => (
-          <div 
-            key={index} 
-            style={cardStyle}
+          <div
+            key={index}
+            style={{
+              backgroundColor: '#0a0a0a',
+              padding: isMobile ? '15px' : '20px',
+              borderRadius: '12px',
+              border: '1px solid #222',
+              transition: '0.3s',
+              cursor: 'pointer',
+              minHeight: '180px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}
             onClick={() => setSelectedProject(p)}
-            onMouseOver={(e) => e.currentTarget.style.borderColor = '#646cff'}
-            onMouseOut={(e) => e.currentTarget.style.borderColor = '#222'}
+            onMouseOver={(e) => {
+              if (!isMobile) {
+                e.currentTarget.style.borderColor = '#646cff';
+                e.currentTarget.style.transform = 'translateY(-5px)';
+              }
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.borderColor = '#222';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
           >
             <div>
-              <h3 style={titleStyle}>{p.title}</h3>
-              <span style={techStyle}>{p.tech}</span>
-              <p style={descStyle}>{p.desc}</p>
+              <h3 style={{
+                fontSize: isMobile ? '1rem' : '1.2rem',
+                marginBottom: '5px'
+              }}>
+                {p.title}
+              </h3>
+
+              <span style={{
+                color: '#646cff',
+                fontSize: '0.7rem',
+                fontWeight: 'bold'
+              }}>
+                {p.tech}
+              </span>
+
+              <p style={{
+                color: '#888',
+                marginTop: '10px',
+                fontSize: isMobile ? '0.8rem' : '0.9rem'
+              }}>
+                {p.desc}
+              </p>
             </div>
-            <div style={{color: '#646cff', fontSize: '0.8rem', marginTop: '10px', display: 'flex', alignItems: 'center', gap: '5px'}}>
-               <FaInfoCircle /> {t('projects.clickForDetails', 'Detaylar için tıkla')}
+
+            <div style={{
+              color: '#646cff',
+              fontSize: '0.75rem',
+              marginTop: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '5px'
+            }}>
+              <FaInfoCircle /> {t('projects.clickForDetails')}
             </div>
           </div>
         ))}
       </div>
 
       {selectedProject && (
-        <div style={modalOverlayStyle} onClick={() => setSelectedProject(null)}>
-          <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-            <button style={closeButtonStyle} onClick={() => setSelectedProject(null)}>
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.85)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: isMobile ? 'flex-end' : 'center',
+            zIndex: 1000
+          }}
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            style={{
+              backgroundColor: '#111',
+              padding: isMobile ? '25px' : '40px',
+              borderRadius: isMobile ? '20px 20px 0 0' : '20px',
+              maxWidth: '500px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              position: 'relative',
+              border: '1px solid #333'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                background: 'none',
+                border: 'none',
+                color: '#fff',
+                fontSize: '1.5rem',
+                cursor: 'pointer'
+              }}
+              onClick={() => setSelectedProject(null)}
+            >
               <FaTimes />
             </button>
-            <h2 style={{color: '#646cff'}}>{selectedProject.title}</h2>
-            <span style={techStyle}>{selectedProject.tech}</span>
-            <hr style={{borderColor: '#222', margin: '20px 0'}} />
-            <p style={{lineHeight: '1.6', color: '#ccc'}}>{selectedProject.details}</p>
-            
-            <a 
-              href={selectedProject.githubLink} 
-              target="_blank" 
+
+            <h2 style={{ color: '#646cff', fontSize: isMobile ? '1.4rem' : '1.8rem' }}>
+              {selectedProject.title}
+            </h2>
+
+            <span style={{ color: '#646cff', fontSize: '0.8rem' }}>
+              {selectedProject.tech}
+            </span>
+
+            <hr style={{ borderColor: '#222', margin: '20px 0' }} />
+
+            <p style={{
+              lineHeight: '1.6',
+              color: '#ccc',
+              fontSize: isMobile ? '0.9rem' : '1rem'
+            }}>
+              {selectedProject.details}
+            </p>
+
+            <a
+              href={selectedProject.githubLink}
+              target="_blank"
               rel="noreferrer"
-              style={githubButtonStyle}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#646cff',
+                color: '#fff',
+                padding: '12px',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                marginTop: '25px',
+                width: '100%'
+              }}
             >
               <FaGithub style={{ marginRight: '8px' }} />
-              {t('projects.viewOnGithub', "GitHub'da Kodları İncele")}
+              {t('projects.viewOnGithub')}
             </a>
           </div>
         </div>
       )}
     </section>
   );
-};
-
-// --- STİLLER ---
-const sectionStyle: React.CSSProperties = { padding: '60px 10%', backgroundColor: '#000', color: '#fff' };
-const headingStyle: React.CSSProperties = { fontSize: '2.5rem', textAlign: 'center', marginBottom: '40px' };
-const gridStyle: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' };
-
-const cardStyle: React.CSSProperties = {
-  backgroundColor: '#0a0a0a',
-  padding: '20px',
-  borderRadius: '12px',
-  border: '1px solid #222',
-  transition: '0.3s ease',
-  cursor: 'pointer',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  minHeight: '200px'
-};
-
-const titleStyle: React.CSSProperties = { fontSize: '1.2rem', color: '#fff', marginBottom: '5px' };
-const techStyle: React.CSSProperties = { color: '#646cff', fontSize: '0.75rem', fontWeight: 'bold', textTransform: 'uppercase' };
-const descStyle: React.CSSProperties = { color: '#888', marginTop: '10px', fontSize: '0.9rem' };
-
-const modalOverlayStyle: React.CSSProperties = {
-  position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-  backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000
-};
-
-const modalContentStyle: React.CSSProperties = {
-  backgroundColor: '#111', padding: '40px', borderRadius: '20px',
-  maxWidth: '500px', width: '90%', position: 'relative', border: '1px solid #333', boxShadow: '0 0 30px rgba(100,108,255,0.2)'
-};
-
-const closeButtonStyle: React.CSSProperties = {
-  position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer'
-};
-
-const githubButtonStyle: React.CSSProperties = {
-  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#646cff',
-  color: '#fff', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', marginTop: '30px', width: '100%'
 };
 
 export default Projects;

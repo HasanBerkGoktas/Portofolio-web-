@@ -284,3 +284,151 @@ border:1px solid #333;
 html{
 scroll-behavior:smooth;
 }
+
+.project-card{
+position:relative;
+overflow:hidden;
+}
+
+.project-card::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.15), transparent 40%);
+opacity:0;
+transition:0.3s;
+}
+
+.project-card:hover::after{
+opacity:1;
+}
+
+@media (max-width:900px){
+
+.navbar{
+padding:20px 40px;
+}
+
+.hero-title{
+font-size:60px;
+}
+
+.projects{
+padding:100px 40px;
+}
+
+/* proje satırları alt alta */
+
+.project-row{
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+}
+
+/* görsel büyür */
+
+.project-image{
+width:100%;
+height:180px;
+}
+
+/* boşluk sıfırlanır */
+
+.project-info{
+margin-left:0;
+}
+
+/* butonlar sola hizalanır */
+
+.project-actions{
+width:100%;
+justify-content:flex-start;
+}
+
+}
+
+
+@media (max-width:600px){
+
+/* navbar */
+
+.navbar{
+padding:15px 20px;
+flex-direction:column;
+gap:10px;
+}
+
+.nav-links{
+display:flex;
+gap:15px;
+}
+
+.nav-links a{
+margin:0;
+font-size:13px;
+}
+
+/* hero */
+
+.hero{
+height:auto;
+padding:120px 20px;
+}
+
+.hero-title{
+font-size:42px;
+}
+
+.hero-sub{
+font-size:15px;
+}
+
+/* buton */
+
+.hero-btn{
+padding:10px 20px;
+}
+
+/* projects */
+
+.projects{
+padding:80px 20px;
+}
+
+.projects h2{
+font-size:26px;
+}
+
+/* proje kart */
+
+.project-row{
+padding:18px;
+}
+
+.project-image{
+height:150px;
+}
+
+/* tagler */
+
+.project-tags{
+flex-wrap:wrap;
+}
+
+}
+
+
+@media (min-width:1400px){
+
+.projects{
+max-width:1400px;
+}
+
+.hero-title{
+font-size:110px;
+}
+
+}
